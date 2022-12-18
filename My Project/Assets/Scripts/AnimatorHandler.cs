@@ -9,11 +9,16 @@ public class AnimatorHandler : MonoBehaviour
     int horizontal;
     public bool canRotate;
 
+    public InputHandler inputHandler;
+    public PlayerLocomotion playerLocomotion;
+
     public void Initialized()
     {
         anim = GetComponent<Animator>();
         vertical = Animator.StringToHash("Vertical");
         horizontal = Animator.StringToHash("Horizontal");
+        inputHandler = GetComponentInParent<InputHandler>();
+        playerLocomotion = GetComponentInParent<PlayerLocomotion>();
     }
 
     public void UpdateAnimatorValues(float verticalMovement, float horizontalMovement)
@@ -63,5 +68,18 @@ public class AnimatorHandler : MonoBehaviour
     public void StopRotation()
     {
         canRotate = false;
+    }
+
+    private void OnAnimatorMove()
+    {
+        if (!inputHandler.isInteracting) //is false
+            return;
+
+        float delta = Time.deltaTime;
+        playerLocomotion.rigidbody.drag = 0;
+        Vector3 deltaPos = anim.deltaPosition;
+        deltaPos.y = 0;
+        Vector3 velocity = deltaPos / delta;
+        playerLocomotion.rigidbody.velocity = velocity;
     }
 }
