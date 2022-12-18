@@ -25,6 +25,13 @@ public class AnimatorHandler : MonoBehaviour
         anim.SetFloat(horizontal, h, .1f, Time.deltaTime);
     }
 
+    public void PlayTargetAnimation(string targetAnim, bool isInteracting)
+    {
+        anim.applyRootMotion = isInteracting;
+        anim.SetBool("isInteracting", isInteracting);
+        anim.CrossFade(targetAnim, .2f);
+    }
+
     private float animatorValues(float movementValue)
     {
         if (movementValue > 0 && movementValue < .55f)

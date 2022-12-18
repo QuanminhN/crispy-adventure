@@ -30,7 +30,7 @@ public class CameraHandler : MonoBehaviour
     public float cameraCollisionOffset = .2f;
     public float minimumCollisionOffset = .2f;
 
-    private void Awake()
+    private void Start()
     {
         singleton = this;
         myTransform = transform;

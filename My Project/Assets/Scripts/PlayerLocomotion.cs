@@ -40,6 +40,19 @@ public class PlayerLocomotion : MonoBehaviour
         float delta = Time.deltaTime;
         inputHandler.TickInput(delta);
 
+        handleMovement(delta);
+        handleRollingAndSprint(delta);
+
+
+    }
+
+    #region Movement
+
+    Vector3 normalVector;
+    Vector3 targetPosition;
+
+    public void handleMovement(float delta)
+    {
         moveDirection = cameraObject.forward * inputHandler.vertical;
         moveDirection += cameraObject.right * inputHandler.horizontal;
         moveDirection.Normalize();
@@ -56,12 +69,8 @@ public class PlayerLocomotion : MonoBehaviour
         {
             handleRotation(delta);
         }
+
     }
-
-    #region Movement
-
-    Vector3 normalVector;
-    Vector3 targetPosition;
 
     private void handleRotation(float delta)
     {
@@ -87,6 +96,32 @@ public class PlayerLocomotion : MonoBehaviour
         myTransform.rotation = targetRotation;
 
     }
+
+    public void handleRollingAndSprint(float delta)
+    {
+        if (animatorHandler.anim.GetBool("isInteracting"))
+        {
+            return;
+        }
+        if (inputHandler.rollFlag)
+        {
+            moveDirection = cameraObject.forward * inputHandler.vertical;
+            moveDirection += cameraObject.right * inputHandler.horizontal;
+
+            if(inputHandler.moveAmount > 0)
+            {
+                animatorHandler.PlayTargetAnimation("Rolling", true);
+                moveDirection.y = 0;
+                Quaternion rollRotation = Quaternion.LookRotation(moveDirection);
+                myTransform.rotation = rollRotation;
+            }
+            else
+            {
+                animatorHandler.PlayTargetAnimation("StepBack", true);
+            }
+        }
+    }
+
     #endregion
 
 
