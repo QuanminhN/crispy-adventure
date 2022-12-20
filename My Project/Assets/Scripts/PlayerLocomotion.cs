@@ -38,12 +38,10 @@ public class PlayerLocomotion : MonoBehaviour
     private void Update()
     {
         float delta = Time.deltaTime;
-        inputHandler.TickInput(delta);
 
+        inputHandler.TickInput(delta);
         handleMovement(delta);
         handleRollingAndSprint(delta);
-
-
     }
 
     #region Movement
