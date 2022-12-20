@@ -101,6 +101,7 @@ public class PlayerLocomotion : MonoBehaviour
     {
         if (animatorHandler.anim.GetBool("isInteracting"))
         {
+            Debug.Log("is interacting");
             return;
         }
         if (inputHandler.rollFlag)

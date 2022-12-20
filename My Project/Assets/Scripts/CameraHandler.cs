@@ -43,6 +43,7 @@ public class CameraHandler : MonoBehaviour
         //Vector3 targetPosition = Vector3.Lerp(myTransform.position, targetTransform.position, delta / followSpeed);
         Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position,
             targetTransform.position, ref cameraFollowVelocity, delta / followSpeed);
+        Debug.Log(targetPosition);
         myTransform.position = targetPosition;
 
         handleCameraCollision(delta);

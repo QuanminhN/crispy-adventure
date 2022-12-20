@@ -20,8 +20,9 @@ public class InputHandler : MonoBehaviour
     Vector2 movementInput;
     Vector2 cameraInput;
 
-    private void Awake()
+    private void Start()
     {
+        Application.targetFrameRate = 60;
         cameraHandler = CameraHandler.singleton;
     }
 
